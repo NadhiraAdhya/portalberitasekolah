@@ -1,3 +1,9 @@
+<?php
+public function dashboard()
+{
+    return view('admin.dashboard'); // arahkan ke view dashboard admin
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

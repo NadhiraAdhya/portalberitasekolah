@@ -29,5 +29,11 @@ Route::middleware(['auth'])->group(function () {
 
     // CRUD Prestasi (Resource Route untuk prestasi)
     Route::resource('prestasi', PrestasiController::class);
+
+    // Password reset routes (forgot password)
+    Route::get('/forgot-password', [PasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('/forgot-password', [PasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 });
+
+?>
 

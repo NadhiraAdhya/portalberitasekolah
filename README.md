@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-(push ulang)
-=======
-(pindah repository)
->>>>>>> branch-portal-berita-sekolah
+pindah repository
+
 
 # portalberitasekolah
 =======

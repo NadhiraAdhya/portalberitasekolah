@@ -9,7 +9,7 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login'); // arahkan ke file form login kamu
+        return view('auth.login.'); // arahkan ke file form login kamu
     }
 
     public function login(Request $request)
@@ -17,7 +17,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('dashboard');
+            return redirect()->route('views.admin.dashboard.');
         }
 
         return redirect()->back()->withErrors(['email' => 'Email atau password salah']);

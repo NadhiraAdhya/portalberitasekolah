@@ -3,46 +3,44 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;  // Menambahkan use Auth
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class LoginController extends Controller
 {
-    // Menampilkan form login
     public function showLoginForm()
     {
-        return view('auth.login');  // Pastikan view login berada di resources/views/auth/login.blade.php
+        return view('auth.login');
     }
 
-    // Menangani proses login
     public function login(Request $request)
-{
-    // Validasi input form
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required|min:6', // Pastikan password memiliki panjang minimal
-    ]);
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-    $credentials = $request->only('email', 'password');
+        $user = User::where('email', $credentials['email'])->first();
 
-    // Log email dan password yang dimasukkan
-    \Log::info('Email yang dimasukkan: ' . $credentials['email']);
-    \Log::info('Password yang dimasukkan: ' . $credentials['password']);
+        if ($user && $credentials['password'] === $user->password) {
+            Auth::login($user);
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard');
+        }
 
-    // Cek apakah ada user dengan email tersebut
-    $user = \App\Models\User::where('email', $credentials['email'])->first();
-
-    if ($user && \Hash::check($credentials['password'], $user->password)) {
-        \Log::info('Password cocok');
-
-        Auth::login($user);  // Jika cocok, login user
-        $request->session()->regenerate();  // Regenerasi session untuk keamanan
-
-        return redirect()->intended('/dashboard');
-    } else {
-        \Log::warning('Login gagal dengan kredensial: ' . json_encode($credentials));
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ]);
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
+    }
 }
-}
+
+
+?>
