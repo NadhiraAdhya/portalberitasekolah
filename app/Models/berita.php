@@ -2,17 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
+
+class CreateBeritasTable extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('beritas', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');  // Judul berita
+            $table->text('description');  // Deskripsi berita
+            $table->string('image_path')->nullable();  // Lokasi gambar (opsional)
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('beritas');
+    }
+}
 
 class Berita extends Model
 {
-    use HasFactory;
+    protected $table = 'beritas';  // Nama tabel yang sesuai dengan nama model
 
-    // Jika Anda tidak ingin menggunakan timestamps
-    // Matikan fitur timestamps
-    //publictiestamps = false;
-
-    // Atau jika Anda ingin menggunakan timestamps, biarkan bagian ini hilang
-    // public $timestamps = true;
+    protected $fillable = ['title', 'description', 'image_path'];
 }

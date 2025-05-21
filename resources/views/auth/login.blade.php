@@ -1,6 +1,5 @@
-<?php 
+<?php // Menambahkan sintaks PHP pada awal file jika diperlukan ?>
 
-?> 
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -21,66 +20,41 @@
     </head>
     <body id="page-top">
        
-       
-
         <!-- Contact-->
         <section class="page-section" id="contact">
             <div class="container">
                 <div class="text-center">
-                   
-                </div>
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- * * SB Forms Contact Form * *-->
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- This form is pre-integrated with SB Forms.-->
-                <!-- To make this form functional, sign up at-->
-                <!-- https://startbootstrap.com/solution/contact-forms-->
-                <!-- to get an API token!-->
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                   <div class="container">
-                <div class="text-center">
                     <h2 class="section-heading text-uppercase">Login</h2>
                     <h3 class="section-subheading text-muted">Hanya Admin yang dapat Login</h3>
                 </div>
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- * * SB Forms Contact Form * *-->
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- This form is pre-integrated with SB Forms.-->
-                <!-- To make this form functional, sign up at-->
-                <!-- https://startbootstrap.com/solution/contact-forms-->
-                <!-- to get an API token!-->
+                
+                <!-- Form Login-->
                 <form action="{{ route('login') }}" method="POST">
-                        @csrf
-                        <div class="form-group mb-3">
-                            <input class="form-control" type="email" name="email" placeholder="Email" required>
-                        </div>
-                        <div class="form-group mb-4">
-                            <input class="form-control" type="password" name="password" placeholder="Password" required>
-                        </div>
-                        <div class="d-grid">
-                            <button class="btn btn-primary btn-block" type="submit">Login</button>
-                        </div>
-                    </form>
-
-                 @if ($errors->any())
-    <div>{{ $errors->first() }}</div>
-@endif
-                    
-                    <!-- Submit success message-->
-                    <!---->
-                    <!-- This is what your users will see when the form-->
-                    <!-- has successfully submitted-->
-                    
-                            <a href="https://startbootstrap.com/solution/contact-forms"></a>
-                        </div>
+                    @csrf  <!-- Token CSRF -->
+                    <div class="form-group mb-3">
+                        <input class="form-control" type="email" name="email" placeholder="Email" required>
                     </div>
-                    <!-- Submit error message-->
-                    <!---->
-                    <!-- This is what your users will see when there is-->
-                    <!-- an error submitting the form-->
+                    <div class="form-group mb-4">
+                        <input class="form-control" type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary btn-block" type="submit">Login</button>
+                    </div>
                     
+                    <!-- Menampilkan error jika ada -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger mt-3">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </form>
             </div>
         </section>
+
         <!-- Footer-->
         <footer class="footer py-4">
             <div class="container">
@@ -98,14 +72,10 @@
                 </div>
             </div>
         </footer>
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
 </html>

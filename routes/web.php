@@ -22,7 +22,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Dashboard - Hanya bisa diakses oleh user yang sudah login
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard']); // Untuk menampilkan data berita dan prestasi
+Route::get('/admin/dashboard', [DashboardController::class, 'index']); // Untuk menampilkan halaman admin dashboard
+
 
     // CRUD Berita (Resource Route untuk berita)
     Route::resource('berita', BeritaController::class);
