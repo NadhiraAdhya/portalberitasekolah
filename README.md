@@ -1,5 +1,8 @@
-pindah repository
+<<<<<<< HEAD
+UPDATE BARU
 
+=======
+>>>>>>> b84a008a49646308bb1ef19c7f8c8ad152616670
 
 # portalberitasekolah
 =======
