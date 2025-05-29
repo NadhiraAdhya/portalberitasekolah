@@ -1,21 +1,45 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h2 class="text-center">Berita Terbaru</h2>
-        <div class="row">
+<div class="container mt-4">
+    <!-- Tombol Kembali ke Dashboard -->
+    <a href="{{ route('dashboard') }}" class="btn btn-secondary mb-3">Kembali ke Dashboard</a>
+
+    <h1>Daftar Berita</h1>
+    <a href="{{ route('berita.create') }}" class="btn btn-primary mb-3">+ Tambah Berita</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Judul</th>
+                <th>Tanggal</th>
+                <th>Gambar</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach($beritas as $berita)
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ asset('storage/' . $berita->image_path) }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $berita->title }}</h5>
-                            <p class="card-text">{{ \Str::limit($berita->description, 100) }}</p>
-                            <a href="#" class="btn btn-primary">Lihat Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
+            <tr>
+                <td>{{ $berita->judul }}</td>
+                <td>{{ $berita->created_at->format('d M Y') }}</td>
+                <td>
+                    @if($berita->image)
+                        <img src="{{ asset('storage/' . $berita->image) }}" alt="Image" width="100px">
+                    @else
+                        <span>No Image</span>
+                    @endif
+                </td>
+                <td>
+                    <a href="{{ route('berita.edit', $berita->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{{ route('berita.destroy', $berita->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus berita ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                    </form>
+                </td>
+            </tr>
             @endforeach
-        </div>
-    </div>
+        </tbody>
+    </table>
+</div>
 @endsection

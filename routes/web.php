@@ -22,19 +22,33 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Dashboard - Hanya bisa diakses oleh user yang sudah login
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard']); // Untuk menampilkan data berita dan prestasi
-Route::get('/admin/dashboard', [DashboardController::class, 'index']); // Untuk menampilkan halaman admin dashboard
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+Route::get('/admin/dashboard', [DashboardController::class, 'dashboard']); // Untuk menampilkan halaman admin dashboard
+
+//CRUD BERITA 
+Route::get('/berita/create', [BeritaController::class, 'create'])->name('berita.create');
+Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store');
+Route::get('/berita/{id}/edit', [BeritaController::class, 'edit'])->name('berita.edit');
+Route::put('/berita/{id}', [BeritaController::class, 'update'])->name('berita.update');
+Route::delete('/berita/{id}', [BeritaController::class, 'destroy'])->name('berita.destroy');
 
 
-    // CRUD Berita (Resource Route untuk berita)
-    Route::resource('berita', BeritaController::class);
 
     // CRUD Prestasi (Resource Route untuk prestasi)
-    Route::resource('prestasi', PrestasiController::class);
+Route::get('/prestasi/create', [PrestasiController::class, 'create'])->name('prestasi.create');
+Route::post('/prestasi', [PrestasiController::class, 'store'])->name('prestasi.store');
+Route::get('/prestasi/{id}/edit', [PrestasiController::class, 'edit'])->name('prestasi.edit');
+Route::put('/prestasi/{id}', [PrestasiController::class, 'update'])->name('prestasi.update');
+Route::delete('/prestasi/{id}', [PrestasiController::class, 'destroy'])->name('prestasi.destroy');
+
+Route::resource('admin/berita', BeritaController::class);
+Route::resource('admin/prestasi', PrestasiController::class);
+Route::get('/', [LandingPageController::class, 'index']);
+
 
     // Password reset routes (forgot password)
-    Route::get('/forgot-password', [PasswordController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('/forgot-password', [PasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/forgot-password', [App\Http\Controllers\AuthController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('/forgot-password', [App\Http\Controllers\AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 });
 
 ?>

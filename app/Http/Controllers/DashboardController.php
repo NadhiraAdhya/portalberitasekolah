@@ -10,16 +10,11 @@ class DashboardController extends Controller
     // Fungsi untuk menampilkan halaman admin dashboard
     public function index()
     {
-        return view('admin.dashboard');  // Pastikan 'admin.dashboard' ada di resources/views/admin/dashboard.blade.php
-    }
-   
-    // Fungsi untuk menampilkan data berita dan prestasi
-    public function dashboard()
-    {
+        // Mengambil data berita dan prestasi
         $beritas = Berita::latest()->get();
         $prestasis = Prestasi::latest()->get();
         
-        // Mengirim data ke view 'dashboard'
-        return view('dashboard', compact('beritas', 'prestasis'));
+        // Mengirim data ke view 'admin.dashboard'
+        return view('admin.dashboard', compact('beritas', 'prestasis'));
     }
 }
